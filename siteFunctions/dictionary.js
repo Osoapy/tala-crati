@@ -1,0 +1,1 @@
+let palavras = ["Tapu", "Kaka", "Inque", "Crati", "Tala", "Lele", "Beg"];
