@@ -1,21 +1,120 @@
+/* IMPORTS */
+@import url('https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap');
+
+/* VARIABLES */
+:root {
+    --default-font: 'Mitr', sans-serif;
+    --square-size: 56px;
+    --default-gap: 4px;
+}
+
+/* TAGS */
+* {
+    color: white;
+}
+
 html {
     height: 100%;
     width: 100%;
 }
 
+body {
+    background-color: rgb(110, 92, 98);
+    margin: 0;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+}
+
+main {
+    margin-bottom: 5vh;
+}
+
+/* IDS */
+#title {
+    font-family: var(--default-font);
+    font-weight: 600;
+}
+
 #keyboard {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: var(--default-gap);
+    justify-content: center;
+}
+
+#keyboard-row-1, #keyboard-row-2, #keyboard-row-3 {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
 
+#backspaceIcon {
+    filter: invert(100%);
+    width: calc(var(--square-size) - 16px);
+    height: calc(var(--square-size) - 16px);
+}
+
+#tryies {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: column;
+    gap: var(--default-gap);
+}
+
+/* CLASSES */
+.try {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--default-gap);
+}
+
+.letterInput.current.active {
+    border-bottom: 15px solid #4C4347 !important;
+}
+
+.letterInput.current {
+    background-color: rgba(1, 1, 1, 0); 
+    border-color: #4C4347;
+}
+
+.letterInput {
+    aspect-ratio: 1;
+    font-weight: 600;
+    font-family: var(--default-font);
+    font-size: 2.5em;
+    color: #FAFAFF;
+    background-color: #615458;
+    border: 5px solid #615458;
+    border-radius: 10%;
+    display: flex;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    line-height: 1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: calc(var(--square-size) + 10px);
+    height: calc(var(--square-size) + 10px);
+}
+
+.keyboard-row {
+    gap: var(--default-gap);
+}
+
 .letterButton {
+    font-family: var(--default-font);
     touch-action: manipulation;
+    font-weight: 500;
     outline: none;
     background-color: #4C4347;
     display: flex;
-    font-size: 1em;
-    line-height: 1em;
+    font-size: 1.75em;
     margin: 0;
     justify-content: center;
     align-items: center;
@@ -23,6 +122,6 @@ html {
     cursor: pointer;
     border: none;
     color: #FAFAFF;
-    width: 50px;
-    height: 50px;
+    width: var(--square-size);
+    height: var(--square-size);
 }
