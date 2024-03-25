@@ -1,7 +1,7 @@
 # Tala Crati
 
 ## A fazer:
-- Elementos HTML: \{painel da palavra, boões do teclado, configurações, modo claro/escuro}
+- Elementos HTML: \{painel da palavra, botões do teclado, configurações, modo claro/escuro}
 - Função de randomizar palavra
 - Função de verificar se essa palavra existe no idioma
 - Função de receber o significado dessa palavra
