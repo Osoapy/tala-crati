@@ -45,7 +45,7 @@ main {
     gap: var(--default-gap);
     justify-content: center;
 }
-
+  
 #keyboard-row-1, #keyboard-row-2, #keyboard-row-3 {
     display: flex;
     flex-wrap: wrap;
@@ -124,4 +124,13 @@ main {
     color: #FAFAFF;
     width: var(--square-size);
     height: var(--square-size);
+}
+
+.letterButton#noneButton {
+    background-color: rgba(0, 0, 0, 0);
+    cursor: auto;
+}
+
+.letterButton#enterButton {
+    width: calc(var(--square-size) + var(--square-size) + var(--default-gap));
 }
