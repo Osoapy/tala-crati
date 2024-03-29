@@ -3,18 +3,23 @@ import * as dictionary from './dictionary.js';
 
 dictionary.ping(); // Heya, .log() here!
 
+// Global variables
 let sessionWordList = [], currentWord = "";
 
-function constructPage() {
-    // First we need to know if that word already has been used in this session
-    currentWord = dictionary.getRandomWord(); // Heya, .log() here!
-    while(sessionWordList.includes(currentWord)) {
-        currentWord = dictionary.getRandomWord(); // Heya, .log() here!
+// Simplier functions
+function countLetter(str, letra) {
+    let times = 0;
+    for (let k = 0; k < str.length; k++) {
+        if (str[k] === letra) {
+            times++;
+        }
     }
-    sessionWordList[sessionWordList.length + 1] = currentWord;
-    console.log("The current word is " + currentWord); // Heya, .log() here!
-  
-    // Construction of the enter/backspace inputs
+    return times;
+}
+
+// Complex functions
+function constructPage() {
+    // Construction of the enter/backspace/restart buttons
     let backspace = document.getElementById(`backspaceButton`);
     backspace.addEventListener('click', function() {
         removeLetter();
@@ -23,6 +28,11 @@ function constructPage() {
     let enter = document.getElementById(`enterButton`);
     enter.addEventListener('click', function() {
         verifyWord();
+    });
+
+    let restart = document.getElementById(`restartButton`);
+    restart.addEventListener('click', function() {
+        restartWord();
     });
 
     // Construction of the letter inputs
@@ -35,7 +45,47 @@ function constructPage() {
     }
 }
 
+// Constructing the page
 constructPage();
+
+function validatePage() {
+    // First we need to know if that word already has been used in this session
+    currentWord = dictionary.getRandomWord(); // Heya, .log() here!
+    while(sessionWordList.includes(currentWord)) {
+        currentWord = dictionary.getRandomWord(); // Heya, .log() here!
+    }
+    sessionWordList[sessionWordList.length + 1] = currentWord;
+    console.log("The current word is " + currentWord); // Heya, .log() here!
+}
+
+// Validating the page
+validatePage();
+
+function restartWord() {
+    // Adding a new word to the session word list/getting a new word
+    validatePage();
+
+    // Resetting the letter inputs
+    for(let k = 0; k < 5; k++) {
+        if (k != 0) {
+            for(let n = 0; n < 5; n++) {
+                let letter = document.getElementById(`try${String(k + 1)}-${String(n + 1)}`);
+                letter.textContent = "";
+                letter.className = "letterInput";
+            }
+        }
+        else {
+            for(let n = 0; n < 5; n++) {
+                let letter = document.getElementById(`try${String(k + 1)}-${String(n + 1)}`);
+                letter.textContent = "";
+                letter.className = "letterInput current";
+                if(k == 0 && n == 0) {
+                    letter.className = "letterInput current active";
+                }
+            }
+        }
+    }
+}
 
 function addLetter(letter) {
     console.log(letter + " button was pressed!"); // Heya, .log() here!
@@ -106,9 +156,48 @@ function validateWord(pastTry, lastRow, word) {
     console.log("THIS WORD IS VALID!!!"); // Heya, .log() here!
 
     // We'll not use the last input row, so...
-    for(let k = 0; k < 5; k++) {
+    let resolvedPositionsDomain = [0, 0, 0, 0, 0];
+    let resolvedPositionsCounterDomain = [0, 0, 0, 0, 0];
+    let almost = 0;
+    for (let k = 0; k < 5; k++) {
         console.log("validateWord()\'s for interaction number " + (k + 1)); // Heya, .log() here!
-        pastTry[0].className = "letterInput";
+        if (word[k] == currentWord[k]) {
+            console.log("The letter " + word[k] + " is in the right place!"); // Heya, .log() here!
+            pastTry[almost].className = "letterInput correct";
+            resolvedPositionsDomain[k] = 1;
+            resolvedPositionsCounterDomain[k] = 1;
+        }
+        else if (currentWord.includes(word[k])) {
+            console.log("The letter " + word[k] + " is in an almost"); // Heya, .log() here!
+            almost++;
+        }
+        else {
+            console.log("The letter " + word[k] + " is wrong!"); // Heya, .log() here!
+            pastTry[almost].className = "letterInput wrong";
+            resolvedPositionsCounterDomain[k] = 1;
+        }
+    }
+    console.log(resolvedPositionsDomain); // Heya, .log() here!
+    console.log(resolvedPositionsCounterDomain); // Heya, .log() here!
+    for (let k = 0; k < almost; k++) {
+        console.log("Inside the almost for"); // Heya, .log() here!
+        let letterIndex = 0, found = 0;
+        for (; resolvedPositionsCounterDomain[letterIndex] != 0; letterIndex++) {}
+        for (let n = 0; n < 5; n++) {
+            console.log("Inside the almost for's inner for"); // Heya, .log() here!
+            if (resolvedPositionsDomain[n] == 0) {
+                if (word[letterIndex] == currentWord[n]) {
+                    pastTry[0].className = "letterInput almost";
+                    resolvedPositionsDomain[n] = 1;
+                    found = 1;
+                    break;
+                }
+            }
+        }
+        if (found == 0) {
+            pastTry[0].className = "letterInput wrong";  
+        }
+        resolvedPositionsCounterDomain[letterIndex] = 1;
     }
 
     // Preparing the next input row if it isn't the correct word or the last input row
@@ -116,10 +205,10 @@ function validateWord(pastTry, lastRow, word) {
         if(word != currentWord) {
             for(let k = 0; k < 5; k++) {
                 console.log("validateWord()\'s second for interaction number " + (k + 1)); // Heya, .log() here!
-                let Try = document.getElementById(`try${lastRow + 1}-${k + 1}`);
-                Try.className = "letterInput current";
+                let currentTry = document.getElementById(`try${lastRow + 1}-${k + 1}`);
+                currentTry.className = "letterInput current";
                 if(k == 0) {
-                    Try.className = "letterInput current active";
+                    currentTry.className = "letterInput current active";
                 }
             }
         }

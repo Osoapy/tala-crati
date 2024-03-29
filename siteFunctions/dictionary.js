@@ -1,4 +1,4 @@
-const wordsList = ["INQUE", "CRATI"];
+const wordsList = ["INQUE", "CRATI", "TALAK", "BEGKK", "KAKAK", "IIIII", "AAAAA"];
 export default wordsList;
 
 export { wordsList }

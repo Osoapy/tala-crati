@@ -52,7 +52,7 @@ main {
     justify-content: center;
 }
 
-#backspaceIcon {
+#backspaceIcon, #restartIcon {
     filter: invert(100%);
     width: calc(var(--square-size) - 16px);
     height: calc(var(--square-size) - 16px);
@@ -79,8 +79,21 @@ main {
 }
 
 .letterInput.current {
+    border: 5px solid #615458;
     background-color: rgba(1, 1, 1, 0); 
     border-color: #4C4347;
+}
+
+.letterInput.wrong {
+    background-color: #312a2c;
+}
+
+.letterInput.almost {
+    background-color: #d3ad69;
+}
+
+.letterInput.correct {
+    background-color: #3aa394;
 }
 
 .letterInput {
@@ -90,7 +103,6 @@ main {
     font-size: 2.5em;
     color: #FAFAFF;
     background-color: #615458;
-    border: 5px solid #615458;
     border-radius: 10%;
     display: flex;
     box-sizing: border-box;
@@ -124,11 +136,6 @@ main {
     color: #FAFAFF;
     width: var(--square-size);
     height: var(--square-size);
-}
-
-.letterButton#noneButton {
-    background-color: rgba(0, 0, 0, 0);
-    cursor: auto;
 }
 
 .letterButton#enterButton {
